@@ -60,6 +60,26 @@
 
 <script>
 
+  window.addEventListener('keydown',function(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return ;
+    audio.currentTime = 0; //Reset the timer to 0
+    audio.play();
+    key.classList.add('playing');
+  });
+
+  const keys = document.querySelectorAll('.key');
+
+  function removeTransition(e){
+    if(e.propertyName != 'transform') return ; //Exit if it is not a transform
+    this.classList.remove('playing'); //Here this refers to the key on which this is called
+  }
+
+  keys.forEach(key=>{
+    key.addEventListener('transitionend',removeTransition)
+  });
+
 </script>
 
 
